@@ -13,6 +13,8 @@ function App() {
   const [explaining, setExplaining] = useState(false);
   const [showExplain, setShowExplain] = useState(true);
   const [showHint, setShowHint] = useState(true);
+  const [input, setInput] = useState("");
+  
 
   const languageMap = { c: 50, cpp: 54, java: 62, python: 71, javascript: 63 };
 
@@ -45,11 +47,12 @@ function App() {
   try {
   
     const base64Code = btoa(unescape(encodeURIComponent(sourceCode)));
+    const base64Input = btoa(unescape(encodeURIComponent(input)));
 
     const payload = {
       source_code: base64Code,
       language_id: languageMap[language],
-      stdin: "",
+       stdin: base64Input,
     };
 
     const headers = {
@@ -177,11 +180,32 @@ function App() {
           <CodeEditor language={language} value={sourceCode} onChange={setSourceCode} />
         </div>
 
-        <div className="output-section">
+         <div className="output-section">
           <div className="output">
-            <h2>🧩 Output Console</h2>
-            <pre>{output}</pre>
-          </div>
+                <h2>🧩 Input Console</h2>
+                <textarea
+                    placeholder="💬 Type input for your program (optional)..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    rows={4}
+                    disabled={loading} // Disable input while loading/running
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#1e1e1e",
+                      color: "#00ff99",
+                      border: "1px solid #444",
+                      borderRadius: "8px",
+                      padding: "10px",
+                      fontFamily: "monospace",
+                      opacity: loading ? 0.7 : 1, // Visual feedback when disabled
+                    }}
+                />
+
+                <hr style={{ margin: "10px 0", borderTop: "1px solid #334155" }} />
+
+                <h2>🧩 Program Output</h2>
+                <pre>{output}</pre> {/* Always display the output state here */}
+            </div>  
 
           {showExplain && (
             <div className="ai-output">
@@ -199,7 +223,7 @@ function App() {
         </div>
       </div>
 
-      <footer className="footer">⚙️ Built with ❤️ by Sanjay</footer>
+      {/* <footer className="footer">⚙️ Built with ❤️ by Sanjay</footer> */}
     </div>
   );
 }

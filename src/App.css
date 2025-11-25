@@ -144,6 +144,15 @@ body {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
   transition: 0.3s;
 }
+.ai-output pre {
+  max-height: 25vh;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 10px;
+  border-radius: 8px;
+}
+
 
 .output {
   background-color: #0f172a;
