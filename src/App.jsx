@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CodeEditor from "./components/CodeEditor";
 import "./App.css";
 import axios from "axios";
-
+import { FaMagic } from "react-icons/fa";
 function App() {
   const [language, setLanguage] = useState("python");
   const [sourceCode, setSourceCode] = useState("");
@@ -69,7 +69,7 @@ function App() {
     );
 
     const token = submission.data.token;
-    if (!token) throw new Error("❌ Failed to get submission token");
+    if (!token) throw new Error(" Failed to get submission token");
 
     
     let result = null;
@@ -93,7 +93,7 @@ function App() {
 
     if (compileErr) setOutput("❌ Compilation Error:\n" + compileErr);
     else if (runtimeErr) setOutput("❌ Runtime Error:\n" + runtimeErr);
-    else if (outputText) setOutput("✅ Output:\n" + outputText);
+    else if (outputText) setOutput(" \n" + outputText);
     else setOutput(`⚠️ ${result.status?.description || "No output received"}`);
   } catch (err) {
     console.error("Judge0 Error:", err.response?.data || err.message);
@@ -121,7 +121,7 @@ function App() {
     else setAiHint("💡 Generating...");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/explain", {
+      const response = await axios.post("https://mini-project-soce-smart-online-coding.onrender.com", {
         text: output,
         language,
         type,
@@ -141,7 +141,8 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>⚡ AI-Powered Online Compiler</h1>
+      
+        <h1> ✨ AI-Powered Online Compiler</h1>
         <p className="subtitle">Write • Compile • Run — Instantly!</p>
       </header>
 
@@ -155,7 +156,7 @@ function App() {
         </select>
 
         <button className="run-btn" onClick={handleRun} disabled={loading}>
-          {loading ? "⏳ Running..." : "▶ Run Code"}
+          {loading ? " Running..." : "▶ Run Code"}
         </button>
 
         <button className="explain-btn" onClick={() => handleAIRequest("explain")} disabled={explaining}>
@@ -182,18 +183,18 @@ function App() {
 
          <div className="output-section">
           <div className="output">
-                <h2>🧩 Input Console</h2>
+                <h2>{'>_'} Input Console</h2>
                 <textarea
-                    placeholder="💬 Type input for your program (optional)..."
+                    placeholder="Type input for your program (optional)..."
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     rows={4}
                     disabled={loading} // Disable input while loading/running
                     style={{
                       width: "100%",
-                      backgroundColor: "#1e1e1e",
-                      color: "#00ff99",
-                      border: "1px solid #444",
+                      backgroundColor: "#0f172a",
+                      color: "#c3d1cbff",
+                      border: "1px solid #3b82f6",
                       borderRadius: "8px",
                       padding: "10px",
                       fontFamily: "monospace",
@@ -203,27 +204,26 @@ function App() {
 
                 <hr style={{ margin: "10px 0", borderTop: "1px solid #334155" }} />
 
-                <h2>🧩 Program Output</h2>
+                <h2>{'>_'}Program Output</h2>
                 <pre>{output}</pre> {/* Always display the output state here */}
             </div>  
 
           {showExplain && (
             <div className="ai-output">
-              <h2>🤖 AI Explanation</h2>
+              <h2>{'>_'} AI Explanation</h2>
               <pre>{aiExplanation}</pre>
             </div>
           )}
 
           {showHint && (
             <div className="ai-output">
-              <h2>📝 AI Hint</h2>
+              <h2>{'>_'} AI Hint</h2>
               <pre>{aiHint}</pre>
             </div>
           )}
         </div>
       </div>
 
-      {/* <footer className="footer">⚙️ Built with ❤️ by Sanjay</footer> */}
     </div>
   );
 }
