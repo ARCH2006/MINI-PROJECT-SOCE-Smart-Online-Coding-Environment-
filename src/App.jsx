@@ -121,7 +121,7 @@ function App() {
     else setAiHint("💡 Generating...");
 
     try {
-      const response = await axios.post("https://mini-project-soce-smart-online-coding.onrender.com", {
+      const response = await axios.post("https://mini-project-soce-smart-online-coding.onrender.com/api/explain", {
         text: output,
         language,
         type,
